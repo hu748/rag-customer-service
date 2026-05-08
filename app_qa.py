@@ -147,21 +147,24 @@ with st.sidebar:
                     
                     file_paths = []
                     existing_files = set()
+                    success_count = 0
+                    failed_files = []
                     
                     for uploaded_file in uploaded_files:
-                        file_path = os.path.join(temp_dir, uploaded_file.name)
+                        file_name = uploaded_file.name
+                        file_path = os.path.join(temp_dir, file_name)
                         
-                        if uploaded_file.name in existing_files:
-                            st.warning(f"跳过重复文件: {uploaded_file.name}")
+                        if file_name in existing_files:
+                            st.warning(f"⚠️ 跳过重复文件: {file_name}")
                             continue
-                        existing_files.add(uploaded_file.name)
+                        existing_files.add(file_name)
                         
                         try:
                             with open(file_path, "wb") as f:
                                 f.write(uploaded_file.getbuffer())
                             file_paths.append(file_path)
                         except Exception as e:
-                            st.error(f"文件 {uploaded_file.name} 写入失败: {str(e)}")
+                            failed_files.append(f"{file_name}: 写入失败 - {str(e)}")
                     
                     if file_paths:
                         try:
@@ -169,15 +172,28 @@ with st.sidebar:
                             
                             if result["success"]:
                                 update_collection_stats()
-                                st.success(result["message"])
+                                st.success(f"✅ 成功处理 {len(file_paths)} 个文件，共添加 {result['total_count']} 个文档片段")
+                                
+                                if result.get('results'):
+                                    for res in result['results']:
+                                        if res['success']:
+                                            st.info(f"📄 {os.path.basename(res['file'])}: 成功添加 {res['count']} 个片段")
+                                        else:
+                                            error_msg = res.get('error', '未知错误')
+                                            st.warning(f"⚠️ {os.path.basename(res['file'])}: {error_msg}")
                             else:
-                                st.error(result["message"])
+                                st.error(f"❌ 上传失败: {result['message']}")
                         finally:
                             for file_path in file_paths:
                                 if os.path.exists(file_path):
                                     os.remove(file_path)
                     else:
-                        st.warning("没有可上传的文件")
+                        st.warning("⚠️ 没有可上传的文件")
+                    
+                    if failed_files:
+                        st.error("以下文件处理失败:")
+                        for fail in failed_files:
+                            st.write(f"- {fail}")
     
     st.divider()
     
