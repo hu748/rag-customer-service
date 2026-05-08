@@ -72,9 +72,28 @@ DELETE /session/{session_id} 删除会话
 API Key 请妥善保管，不要上传到 GitHub
 知识库文件默认存储在 ./chroma_db
 会话历史保存在 ./chat_history
-支持批量上传，大文件建议拆分后上传
-📄 License
-MIT License
+1.API Key 配置失败
+检查 API Key 是否正确
+确保网络可以访问阿里云 DashScope 服务
+确认 API Key 有足够的调用额度
+2. 文件上传失败
+检查文件格式是否支持
+确保文件大小不超过 10MB
+PDF 文件如果是扫描件可能无法解析
+3. 知识库回答不准确
+调整similarity_threshold参数（增大可返回更多相关文档）
+优化文档内容，确保关键信息完整
+调整chunk_size参数优化文档分片
+4. 聊天历史不保存
+检查chat_history目录权限
+确保 session_id 正确设置
+检查文件写入权限
+九、注意事项
+API Key 属于敏感信息，请勿泄露
+建议定期备份chroma_db（向量库）和chat_history（聊天记录）目录
+大文件上传时建议分批次处理
+生产环境部署时请配置合适的 CORS 策略（当前 API 为全开放）
+建议使用虚拟环境隔离依赖
 🤝 贡献
 欢迎提交 Issue 与 PR！
 🧡 作者
