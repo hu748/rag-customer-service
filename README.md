@@ -80,3 +80,5 @@ MIT License
 🧡 作者
 基于 LangChain + RAG 开发
 欢迎 Star 支持～
+<img width="1817" height="1004" alt="image" src="https://github.com/user-attachments/assets/c1915d79-7a1d-42bf-8216-e0a6ac709f88" />
+
