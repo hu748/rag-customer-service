@@ -1,0 +1,94 @@
+# ======================
+# 🔐 敏感配置文件（绝对不能上传）
+# ======================
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# ======================
+# 📦 项目数据文件（避免泄露用户/业务数据）
+# ======================
+chroma_db/
+*.db
+*.sqlite3
+*.sqlite
+*.db-journal
+
+chat_history/
+*.jsonl
+*.log
+*.csv
+
+temp_uploads/
+uploads/
+*.tmp
+*.bak
+
+# ======================
+# 🐍 Python 相关文件
+# ======================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+*.whl
+*.dist-info/
+build/
+dist/
+*.so
+*.egg
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.nox/
+.eggs/
+*.egg-info/
+.cache/
+.pytest_cache/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+cover/
+
+# ======================
+# 🛠️ IDE/编辑器配置
+# ======================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+
+# ======================
+# 🚀 运行日志/调试文件
+# ======================
+*.log
+*.out
+*.err
+debug.log
+server.log
+access.log
+error.log
+
+# ======================
+# 📦 其他无关文件
+# ======================
+*.zip
+*.tar.gz
+*.rar
+*.7z
+node_modules/  # 如果你以后加前端依赖
